@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <AnalysisLevel>8.0-all</AnalysisLevel>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AnalysisLevel>8.0-all</AnalysisLevel>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- 4.10.0-3.final provides Microsoft.CodeAnalysis.dll 4.10 (through the Microsoft.CodeAnalysis.Common dependency) -->
+    <!-- See https://nuget.info/packages/Microsoft.CodeAnalysis.CSharp/4.10.0-3.final -->
+    <!-- and https://nuget.info/packages/Microsoft.CodeAnalysis.Common/4.10.0-3.final -->
+    <!-- This works with SDK 3.0.300 -->
+    <!-- <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.10.0-3.final"/> -->
+    <!-- 4.9.2 provides Microsoft.CodeAnalysis.dll 4.9 -->
+    <!-- This doesn't work with SDK 3.0.300 -->
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0"/>
+    <PackageReference Include="NUnit" Version="4.1.0"/>
+    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0"/>
+    <PackageReference Include="NUnit.Analyzers" Version="4.2.0"/>
+  </ItemGroup>
+
+  <Target Name="CopyStuff" BeforeTargets="Build">
+    <Copy SourceFiles="@(Analyzer)" DestinationFolder="$(OutputPath)\analyzers" SkipUnchangedFiles="true"/>
+  </Target>
+
+</Project>
