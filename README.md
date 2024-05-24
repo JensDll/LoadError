@@ -21,6 +21,6 @@ There is an incompatibility between `Microsoft.CodeAnalysis.CSharp.CodeStyle.dll
   provides `Microsoft.CodeAnalysis.dll` through the
   [Microsoft.CodeAnalysis.Common](https://www.nuget.org/packages/Microsoft.CodeAnalysis.Common/)
   dependency.
-- The package reference `<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2"/>`
-  will only pass the test with SDK 8.0.205.
+- With package reference `<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2"/>`
+  the test only passes on SDK 8.0.205.
 - See [`csproj`](./LoadError.csproj) and [`global.json`](./global.json).
