@@ -9,24 +9,28 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-22.04, windows-2022, macos-12]
-        sdk-version: [8.0.300, 8.0.205]
-        code-analysis-version: [4.9.2, 4.10.0-3.final]
+        sdk: [8.0.300, 8.0.205]
+        code-analysis: [4.9.2, 4.10.0-3.final]
     runs-on: ${{ matrix.os }}
-    name: SDK ${{ matrix.sdk-version }} on ${{ matrix.os }} with code analysis ${{ matrix.code-analysis-version }}
+    name: SDK ${{ matrix.sdk }} on ${{ matrix.os }} with code analysis ${{ matrix.code-analysis }}
     steps:
       - name: Checking out the repository
         uses: actions/checkout@v4.1.6
 
+      - name: Removing global.json
+        shell: bash
+        run: rm global.json
+
       - name: Setting up dotnet
         uses: actions/setup-dotnet@v4.0.0
         with:
-          dotnet-version: ${{ matrix.sdk-version }}
+          dotnet-version: ${{ matrix.sdk }}
 
-      - name: Restoring
-        run: dotnet restore -property:CodeAnalysisVersion=${{ matrix.code-analysis-version }}
+      - name: Restoring the project
+        run: dotnet restore -property:CodeAnalysisVersion=${{ matrix.code-analysis }}
 
-      - name: Building
+      - name: Building the project
         run: dotnet build --no-restore --configuration Debug
 
-      - name: Testing
+      - name: Testing the project
         run: dotnet test --no-build --no-restore --configuration Debug
