@@ -1,0 +1,32 @@
+name: Load Error
+
+on:
+  push:
+
+jobs:
+  test-load-error:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-2022, macos-12]
+        sdk: [8.0.300, 8.0.205]
+        code-analysis: [4.9.2, 4.10.0-3.final]
+    runs-on: ${{ matrix.os }}
+    name: SDK ${{ matrix.sdk }} on ${{ matrix.os }} with code analysis ${{ matrix.code-analysis }}
+    steps:
+      - name: Checking out the repository
+        uses: actions/checkout@v4.1.6
+
+      - name: Updating global.json
+        shell: bash
+        run: |
+          tmp=$(mktemp)
+          trap 'rm $tmp' EXIT
+          jq '.sdk.version = "${{ matrix.sdk }}"' global.json > $tmp
+          cp $tmp global.json
+
+      - name: Setting up dotnet
+        uses: actions/setup-dotnet@v4.0.0
+
+      - name: Running test
+        run: dotnet test -p:CodeAnalysisVersion=${{ matrix.code-analysis }}

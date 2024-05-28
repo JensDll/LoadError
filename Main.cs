@@ -96,7 +96,7 @@ internal abstract class TestBase
         Assert.Multiple(() =>
         {
             Assert.That(result.Success, Is.True);
-            Assert.That(result.Diagnostics.WarningsOrWorse(), Is.Empty);
+            Assert.That(result.Diagnostics.WarningOrWorse(), Is.Empty);
         });
     }
 
@@ -104,7 +104,7 @@ internal abstract class TestBase
     {
         CompilationWithAnalyzers withAnalyzers = compilation.WithAnalyzers(s_analyzers);
         ImmutableArray<Diagnostic> diagnostics = await withAnalyzers.GetAnalyzerDiagnosticsAsync();
-        Assert.That(diagnostics.WarningsOrWorse(), Is.Empty);
+        Assert.That(diagnostics.WarningOrWorse(), Is.Empty);
     }
 
     private static string GetSource(string source)
@@ -126,7 +126,7 @@ internal abstract class TestBase
 
 internal static class Extensions
 {
-    public static IEnumerable<Diagnostic> WarningsOrWorse(this IEnumerable<Diagnostic> diagnostics)
+    public static IEnumerable<Diagnostic> WarningOrWorse(this IEnumerable<Diagnostic> diagnostics)
     {
         return diagnostics.Where(static diagnostic => diagnostic.Severity >= DiagnosticSeverity.Warning);
     }
