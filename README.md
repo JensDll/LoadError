@@ -1,7 +1,7 @@
 # Load Error
 
-SDK 8.0.205 has `Microsoft.CodeAnalysis.CSharp.CodeStyle.dll` version `4.9`
-and SDK 8.0.300 has `4.10`.
+SDK `8.0.205` has `Microsoft.CodeAnalysis.CSharp.CodeStyle.dll` version `4.9`
+and SDK `8.0.300` has `4.10`.
 
 ```text
 <dotnet-home>/<sdk-version>/Sdks/Microsoft.NET.Sdk/codestyle/cs/Microsoft.CodeAnalysis.CSharp.CodeStyle.dll
@@ -22,5 +22,6 @@ There is an incompatibility between `Microsoft.CodeAnalysis.CSharp.CodeStyle.dll
   [Microsoft.CodeAnalysis.Common](https://www.nuget.org/packages/Microsoft.CodeAnalysis.Common/)
   dependency.
 - With package reference `<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2"/>`
-  the test only passes on SDK 8.0.205.
+  the test only passes on SDK `8.0.205`.
 - See [`test workflow`](./.github/workflows/test.yaml) and [`GitHub Actions`](https://github.com/JensDll/LoadError/actions).
+  Notice the failing jobs on SDK `8.0.300` in combination with code analysis `4.9`.
