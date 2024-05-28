@@ -1,0 +1,32 @@
+name: Load Error
+
+on:
+  push:
+
+jobs:
+  test-load-error:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-2022, macos-12]
+        sdk-version: [8.0.300, 8.0.205]
+        code-analysis-version: [4.9.2, 4.10.0-3.final]
+    runs-on: ${{ matrix.os }}
+    name: SDK ${{ matrix.sdk-version }} on ${{ matrix.os }} with code analysis ${{ matrix.code-analysis-version }}
+    steps:
+      - name: Checking out the repository
+        uses: actions/checkout@v4.1.6
+
+      - name: Setting up dotnet
+        uses: actions/setup-dotnet@v4.0.0
+        with:
+          dotnet-version: ${{ matrix.sdk-version }}
+
+      - name: Restoring
+        run: dotnet restore -property:CodeAnalysisVersion=${{ matrix.code-analysis-version }}
+
+      - name: Building
+        run: dotnet build --no-restore --configuration Debug
+
+      - name: Testing
+        run: dotnet test --no-build --no-restore --configuration Debug
