@@ -17,14 +17,16 @@ jobs:
       - name: Checking out the repository
         uses: actions/checkout@v4.1.6
 
-      - name: Removing global.json
+      - name: Updating global.json
         shell: bash
-        run: rm global.json
+        run: |
+          tmp=$(mktemp)
+          trap 'rm $tmp' EXIT
+          jq '.sdk.version = "${{ matrix.sdk }}"' global.json > $tmp
+          mv $tmp global.json
 
       - name: Setting up dotnet
         uses: actions/setup-dotnet@v4.0.0
-        with:
-          dotnet-version: ${{ matrix.sdk }}
 
       - name: Running test
         run: dotnet test -p:CodeAnalysisVersion=${{ matrix.code-analysis }}
