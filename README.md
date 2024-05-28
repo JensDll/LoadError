@@ -15,7 +15,7 @@ There is an incompatibility between `Microsoft.CodeAnalysis.CSharp.CodeStyle.dll
 
 ## Reproduce
 
-- Use `dotnet test` to run the test case.
+- Use `dotnet test -p:CodeAnalysisVersion=<version>` to run the test case.
 - The NuGet reference
   [Microsoft.CodeAnalysis.CSharp](https://www.nuget.org/packages/Microsoft.CodeAnalysis.CSharp/)
   provides `Microsoft.CodeAnalysis.dll` through the
@@ -23,4 +23,4 @@ There is an incompatibility between `Microsoft.CodeAnalysis.CSharp.CodeStyle.dll
   dependency.
 - With package reference `<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2"/>`
   the test only passes on SDK 8.0.205.
-- See [`csproj`](./LoadError.csproj) and [`global.json`](./global.json).
+- See [`test workflow`](./.github/workflows/test.yaml) and [`GitHub Actions`](https://github.com/JensDll/LoadError/actions).
