@@ -23,7 +23,7 @@ jobs:
           tmp=$(mktemp)
           trap 'rm $tmp' EXIT
           jq '.sdk.version = "${{ matrix.sdk }}"' global.json > $tmp
-          mv $tmp global.json
+          cp $tmp global.json
 
       - name: Setting up dotnet
         uses: actions/setup-dotnet@v4.0.0
